@@ -1,0 +1,8 @@
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\bin\Release\RestoreDatabase.exe.config
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\bin\Release\RestoreDatabase.exe
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\bin\Release\RestoreDatabase.pdb
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\obj\Release\RestoreDatabase.Form1.resources
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\obj\Release\RestoreDatabase.Properties.Resources.resources
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\obj\Release\RestoreDatabase.csproj.GenerateResource.Cache
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\obj\Release\RestoreDatabase.exe
+D:\Udv\Playground\github\RestoreDatabase\RestoreDatabase\obj\Release\RestoreDatabase.pdb
