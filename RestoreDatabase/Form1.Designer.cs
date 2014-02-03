@@ -93,6 +93,7 @@
             this.tbServer.Name = "tbServer";
             this.tbServer.Size = new System.Drawing.Size(616, 20);
             this.tbServer.TabIndex = 20;
+            this.tbServer.Text = "localhost";
             this.tbServer.TextChanged += new System.EventHandler(this.tbServer_TextChanged);
             // 
             // label2
