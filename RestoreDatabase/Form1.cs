@@ -49,6 +49,13 @@ namespace RestoreDatabase
                 connectionString = string.Format("Data Source={0}; User ID={1}; Password={2};", server, tbSqlUser.Text, tbSqlPassword.Text);
             }
 
+            HandleRestore(connectionString, databaseName, file, dblocation);
+
+            lbWorkIndicator.Text = "";
+        }
+
+        private void HandleRestore(string connectionString, string databaseName, string file, string dblocation)
+        {
             try
             {
                 RestoreDatabase(connectionString, databaseName, file, dblocation);
@@ -65,7 +72,7 @@ namespace RestoreDatabase
                     if (msgResult == DialogResult.Yes)
                     {
                         PermissionHelper.GiveUserReadAccessToFolder(user, dir);
-                        RestoreDatabase(connectionString, databaseName, file, dblocation);
+                        HandleRestore(connectionString, databaseName, file, dblocation);
                     }
                 }
                 else if (sqlEx.Message.ToLower().Contains("is not part of database"))
@@ -82,7 +89,6 @@ namespace RestoreDatabase
                 MessageBox.Show(ex.ToString());
             }
 
-            lbWorkIndicator.Text = "";
         }
 
         private void RestoreDatabase(string connectionString, string databaseName, string file, string dblocation)
