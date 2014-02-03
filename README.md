@@ -22,6 +22,6 @@ The tool checks if the database file already exists on the system, and promts yo
 
 ### Automatic Database Naming
 
-The tool asumes that the name of the selected .bak file, is the same as the database inside the .bak file. If this is not the case the tool promts you to specify the correct name:
+The tool asumes that the name of the selected .bak file, is the same as the database inside the .bak file. If this is not the case the tool promts you to specify the correct name (this is what the `Original Database Name` field is for):
 
 ![screenshot-badname](screenshot-badname.png)
