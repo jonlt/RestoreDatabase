@@ -17,11 +17,16 @@ namespace RestoreDatabase
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string file)
         {
             InitializeComponent();
             tbDBLocation.Text = App.Default.DBLocation;
             lbWorkIndicator.Text = "";
+
+            if (!string.IsNullOrEmpty(file))
+            {
+                tbSelectedFile.Text = file;
+            }
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
