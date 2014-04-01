@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Transactions;
 using System.Windows.Forms;
 
@@ -114,8 +115,10 @@ namespace RestoreDatabase
             var dblocation = tbDBLocation.Text;
 
             var connectionString = GetConnectionString();
+    
             HandleRestore(connectionString, databaseName, file, dblocation);
 
+            
             lbWorkIndicator.Text = "";
         }
 

@@ -7,5 +7,3 @@ MOVE N'{2}_log' TO N'{4}',
 NOUNLOAD,  
 REPLACE,  
 STATS = 5;
-
-
