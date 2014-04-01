@@ -8,9 +8,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 
 namespace RestoreDatabase
@@ -20,13 +22,76 @@ namespace RestoreDatabase
         public Form1(string file)
         {
             InitializeComponent();
-            tbDBLocation.Text = App.Default.DBLocation;
+            tbDBLocation.Text = GetDbLocation();
             lbWorkIndicator.Text = "";
 
             if (!string.IsNullOrEmpty(file))
             {
                 tbSelectedFile.Text = file;
             }
+        }
+
+        private string GetDatabaseNameFromSelectedFile()
+        {
+            using (var connection = new SqlConnection(GetConnectionString()))
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                using(var command = connection.CreateCommand())
+                {
+                    command.CommandText = "RESTORE FILELISTONLY FROM DISK = @File";
+                    command.Parameters.AddWithValue("@File", tbSelectedFile.Text);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (Convert.ToChar(reader["Type"]) == 'D')
+                            {
+                                return Convert.ToString(reader["LogicalName"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+
+        }
+
+        private string GetDbLocation()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(GetConnectionString()))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT physical_name FROM sys.master_files";
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var file = Convert.ToString(reader["physical_name"]);
+                                return Path.GetDirectoryName(file);
+                            }
+                        }
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
@@ -47,16 +112,22 @@ namespace RestoreDatabase
             var databaseName = tbDatabaseName.Text;
             var file = tbSelectedFile.Text;
             var dblocation = tbDBLocation.Text;
-            var connectionString = string.Format("Data Source={0}; Integrated Security=True;", server);
 
-            if (!string.IsNullOrEmpty(tbSqlUser.Text) && !string.IsNullOrEmpty(tbSqlPassword.Text))
-            {
-                connectionString = string.Format("Data Source={0}; User ID={1}; Password={2};", server, tbSqlUser.Text, tbSqlPassword.Text);
-            }
-
+            var connectionString = GetConnectionString();
             HandleRestore(connectionString, databaseName, file, dblocation);
 
             lbWorkIndicator.Text = "";
+        }
+
+        private string GetConnectionString()
+        {
+            var connectionString = string.Format("Data Source={0}; Integrated Security=True;", tbServer.Text);
+
+            if (!string.IsNullOrEmpty(tbSqlUser.Text) && !string.IsNullOrEmpty(tbSqlPassword.Text))
+            {
+                connectionString = string.Format("Data Source={0}; User ID={1}; Password={2};", tbServer.Text, tbSqlUser.Text, tbSqlPassword.Text);
+            }
+            return connectionString;
         }
 
         private void HandleRestore(string connectionString, string databaseName, string file, string dblocation)
@@ -116,14 +187,18 @@ namespace RestoreDatabase
                     {
                         connection.Open();
                     }
+
                     using (var command = connection.CreateCommand())
                     {
                         var sql = tbSql.Text;
+                        command.CommandTimeout = 3600;
+
 
                         command.CommandText = sql;
                         command.ExecuteNonQuery();
                     }
                 }
+
                 MessageBox.Show("Restored!");
             }
             else
@@ -132,14 +207,14 @@ namespace RestoreDatabase
             }
         }
 
-        private static bool GenerateSQL(string databaseName, string originalDatabaseName, string file, string dblocation, out string sql)
+        private static bool GenerateSQL(string databaseName, string originalDatabaseName, string file, string dblocation, string newuser, string newpassword, out string sql)
         {
-            if(string.IsNullOrEmpty(file))
+            if (string.IsNullOrEmpty(file))
             {
                 sql = null;
                 return false;
             }
-            
+
             var fromDatabase = Path.GetFileName(file).Replace(Path.GetExtension(file) ?? "", "");
             if (!string.IsNullOrEmpty(originalDatabaseName))
             {
@@ -149,8 +224,17 @@ namespace RestoreDatabase
             var mdfFile = Path.Combine(dblocation, databaseName + ".mdf");
             var logFile = Path.Combine(dblocation, databaseName + ".ldf");
 
-            sql = string.Format(@"RESTORE DATABASE [{0}] FROM DISK = '{1}' WITH  FILE = 1, MOVE N'{2}' TO N'{3}',  MOVE N'{2}_log' TO N'{4}',  NOUNLOAD,  REPLACE,  STATS = 5", databaseName, file, fromDatabase, mdfFile, logFile);
-            return true;
+            var sqlFormat = ReadCreateScript();
+            if (!string.IsNullOrEmpty(sqlFormat))
+            {
+                sql = string.Format(sqlFormat, databaseName, file, fromDatabase, mdfFile, logFile, newuser, newpassword);
+                return true;
+            }
+            else
+            {
+                sql = null;
+                return false;
+            }
         }
 
         public string GetMdfFile(string databaseName, string dblocation)
@@ -162,7 +246,8 @@ namespace RestoreDatabase
         public void UpdateSql()
         {
             string sql;
-            if (GenerateSQL(tbDatabaseName.Text, tbOrgDatabaseName.Text, tbSelectedFile.Text, tbDBLocation.Text, out sql))
+            tbDBLocation.Text = GetDbLocation();
+            if (GenerateSQL(tbDatabaseName.Text, tbOrgDatabaseName.Text, tbSelectedFile.Text, tbDBLocation.Text, tbNewSqlUser.Text, tbNewSqlPassword.Text, out sql))
             {
                 tbSql.Text = sql;
             }
@@ -189,7 +274,13 @@ namespace RestoreDatabase
 
         private void tbSelectedFile_TextChanged(object sender, EventArgs e)
         {
+            var databasename = GetDatabaseNameFromSelectedFile();
+            if (databasename != null)
+            {
+                tbOrgDatabaseName.Text = databasename;
+            }
             UpdateSql();
+            
         }
 
         private void tbServer_TextChanged(object sender, EventArgs e)
@@ -199,6 +290,8 @@ namespace RestoreDatabase
 
         private void tbDatabaseName_TextChanged(object sender, EventArgs e)
         {
+            tbNewSqlUser.Text = tbDatabaseName.Text;
+            tbNewSqlPassword.Text = tbDatabaseName.Text;
             UpdateSql();
         }
 
@@ -210,6 +303,31 @@ namespace RestoreDatabase
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             tbSqlPassword.PasswordChar = cbShowSqlPassword.Checked ? '\0' : '*';
+        }
+
+        private void cbShowNewSqlPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            tbNewSqlPassword.PasswordChar = cbShowNewSqlPassword.Checked ? '\0' : '*';
+        }
+
+        private static string ReadCreateScript()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "RestoreDatabase.CreateScript.sql";
+
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        string result = reader.ReadToEnd();
+                        return result;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

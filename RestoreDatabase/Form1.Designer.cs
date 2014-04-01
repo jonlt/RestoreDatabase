@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tbSelectedFile = new System.Windows.Forms.TextBox();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +52,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.cbShowSqlPassword = new System.Windows.Forms.CheckBox();
+            this.cbShowNewSqlPassword = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbNewSqlPassword = new System.Windows.Forms.TextBox();
+            this.tbNewSqlUser = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbSelectedFile
@@ -99,17 +106,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 192);
+            this.label2.Location = new System.Drawing.Point(12, 171);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Database Name:";
+            this.label2.Text = "New Database Name:";
             // 
             // tbDatabaseName
             // 
             this.tbDatabaseName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDatabaseName.Location = new System.Drawing.Point(12, 209);
+            this.tbDatabaseName.Location = new System.Drawing.Point(12, 188);
             this.tbDatabaseName.Name = "tbDatabaseName";
             this.tbDatabaseName.Size = new System.Drawing.Size(616, 20);
             this.tbDatabaseName.TabIndex = 30;
@@ -136,9 +143,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 303);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 13);
+            this.label3.Size = new System.Drawing.Size(137, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Database file location:";
+            this.label3.Text = "New Database file location:";
             // 
             // tbDBLocation
             // 
@@ -177,7 +184,7 @@
             // 
             this.tbOrgDatabaseName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbOrgDatabaseName.Location = new System.Drawing.Point(12, 265);
+            this.tbOrgDatabaseName.Location = new System.Drawing.Point(12, 228);
             this.tbOrgDatabaseName.Name = "tbOrgDatabaseName";
             this.tbOrgDatabaseName.Size = new System.Drawing.Size(616, 20);
             this.tbOrgDatabaseName.TabIndex = 40;
@@ -186,7 +193,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 248);
+            this.label4.Location = new System.Drawing.Point(12, 211);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 13);
             this.label4.TabIndex = 12;
@@ -216,9 +223,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 119);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(192, 13);
+            this.label6.Size = new System.Drawing.Size(235, 13);
             this.label6.TabIndex = 16;
-            this.label6.Text = "Credentials (if different from \'Integrated\')";
+            this.label6.Text = "DB login Credentials (if different from \'Integrated\')";
             // 
             // tbSqlUser
             // 
@@ -267,11 +274,73 @@
             this.cbShowSqlPassword.UseVisualStyleBackColor = true;
             this.cbShowSqlPassword.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // cbShowNewSqlPassword
+            // 
+            this.cbShowNewSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbShowNewSqlPassword.AutoSize = true;
+            this.cbShowNewSqlPassword.Location = new System.Drawing.Point(569, 277);
+            this.cbShowNewSqlPassword.Name = "cbShowNewSqlPassword";
+            this.cbShowNewSqlPassword.Size = new System.Drawing.Size(59, 17);
+            this.cbShowNewSqlPassword.TabIndex = 86;
+            this.cbShowNewSqlPassword.Text = "Show?";
+            this.cbShowNewSqlPassword.UseVisualStyleBackColor = true;
+            this.cbShowNewSqlPassword.CheckedChanged += new System.EventHandler(this.cbShowNewSqlPassword_CheckedChanged);
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(301, 278);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 13);
+            this.label9.TabIndex = 83;
+            this.label9.Text = "Password:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 278);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 13);
+            this.label10.TabIndex = 82;
+            this.label10.Text = "User:";
+            // 
+            // tbNewSqlPassword
+            // 
+            this.tbNewSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbNewSqlPassword.Location = new System.Drawing.Point(363, 275);
+            this.tbNewSqlPassword.Name = "tbNewSqlPassword";
+            this.tbNewSqlPassword.PasswordChar = '*';
+            this.tbNewSqlPassword.Size = new System.Drawing.Size(200, 20);
+            this.tbNewSqlPassword.TabIndex = 85;
+            // 
+            // tbNewSqlUser
+            // 
+            this.tbNewSqlUser.Location = new System.Drawing.Point(53, 275);
+            this.tbNewSqlUser.Name = "tbNewSqlUser";
+            this.tbNewSqlUser.Size = new System.Drawing.Size(242, 20);
+            this.tbNewSqlUser.TabIndex = 84;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 255);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(112, 13);
+            this.label11.TabIndex = 81;
+            this.label11.Text = "New login Credentials:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 669);
+            this.Controls.Add(this.cbShowNewSqlPassword);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.tbNewSqlPassword);
+            this.Controls.Add(this.tbNewSqlUser);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.cbShowSqlPassword);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -293,6 +362,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.tbSelectedFile);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "SQL .bak Restore";
             this.ResumeLayout(false);
@@ -325,6 +395,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox cbShowSqlPassword;
+        private System.Windows.Forms.CheckBox cbShowNewSqlPassword;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbNewSqlPassword;
+        private System.Windows.Forms.TextBox tbNewSqlUser;
+        private System.Windows.Forms.Label label11;
 
     }
 }
