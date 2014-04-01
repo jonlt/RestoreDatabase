@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
 
@@ -259,16 +258,12 @@ namespace RestoreDatabase
             {
                 var folder = fbdDBLocation.SelectedPath;
                 tbDBLocation.Text = folder;
-                App.Default.DBLocation = folder;
-                App.Default.Save();
             }
         }
 
         private void tbDBLocation_TextChanged(object sender, EventArgs e)
         {
             var folder = tbDBLocation.Text;
-            App.Default.DBLocation = folder;
-            App.Default.Save();
             UpdateSql();
         }
 

@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
-using System.Threading.Tasks;
 using System.Management;
 
 namespace RestoreDatabase
@@ -45,14 +44,6 @@ namespace RestoreDatabase
                 }
             }
         }
-
-        //public static void GiveUserReadAccessToFolder(string user, DirectoryInfo folder)
-        //{
-        //    var accessControl = folder.GetAccessControl();
-        //    var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, AccessControlType.Allow);
-        //    accessControl.AddAccessRule(rule);
-        //    folder.SetAccessControl(accessControl);
-        //}
 
         public static bool GiveUserReadAccessToFolder(string user, DirectoryInfo folder)
         {
