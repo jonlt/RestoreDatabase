@@ -181,6 +181,7 @@
             this.tbSql.Location = new System.Drawing.Point(12, 451);
             this.tbSql.Multiline = true;
             this.tbSql.Name = "tbSql";
+            this.tbSql.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbSql.Size = new System.Drawing.Size(616, 184);
             this.tbSql.TabIndex = 70;
             // 
@@ -317,6 +318,7 @@
             this.tbNewSqlPassword.PasswordChar = '*';
             this.tbNewSqlPassword.Size = new System.Drawing.Size(200, 20);
             this.tbNewSqlPassword.TabIndex = 85;
+            this.tbNewSqlPassword.TextChanged += new System.EventHandler(this.tbNewSqlPassword_TextChanged);
             // 
             // tbNewSqlUser
             // 
@@ -324,6 +326,7 @@
             this.tbNewSqlUser.Name = "tbNewSqlUser";
             this.tbNewSqlUser.Size = new System.Drawing.Size(242, 20);
             this.tbNewSqlUser.TabIndex = 84;
+            this.tbNewSqlUser.TextChanged += new System.EventHandler(this.tbNewSqlUser_TextChanged);
             // 
             // label11
             // 

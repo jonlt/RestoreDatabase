@@ -223,6 +223,11 @@ namespace RestoreDatabase
 
             var sqlFormat = ReadCreateScript();
 
+            if (!string.IsNullOrEmpty(newuser) && !string.IsNullOrEmpty(newpassword))
+            {
+                sqlFormat += ReadCreateUserScript();
+            }
+
             var disk = string.Join(Environment.NewLine+",", files.Select(f => string.Format("DISK = '{0}'", f)).ToArray());
 
             if (!string.IsNullOrEmpty(sqlFormat))
@@ -317,8 +322,18 @@ namespace RestoreDatabase
 
         private static string ReadCreateScript()
         {
+            return ReadEmbeddedScript("RestoreDatabase.CreateScript.sql");
+        }
+
+        private static string ReadCreateUserScript()
+        {
+            return ReadEmbeddedScript("RestoreDatabase.CreateUserScript.sql");
+        }
+
+        private static string ReadEmbeddedScript(string script)
+        {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "RestoreDatabase.CreateScript.sql";
+            var resourceName = script;
 
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
@@ -353,7 +368,6 @@ namespace RestoreDatabase
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             SetSelectedFiles(files);
-            
         }
 
         private void SetSelectedFiles(string[] files)
@@ -364,6 +378,16 @@ namespace RestoreDatabase
         private string[] GetSelectedFiles()
         {
             return tbSelectedFile.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private void tbNewSqlUser_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSql();
+        }
+
+        private void tbNewSqlPassword_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSql();
         }
     }
 }
