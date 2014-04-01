@@ -39,10 +39,11 @@ namespace RestoreDatabase
                     connection.Open();
                 }
 
-                using(var command = connection.CreateCommand())
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "RESTORE FILELISTONLY FROM DISK = @File";
-                    command.Parameters.AddWithValue("@File", tbSelectedFile.Text);
+                    var file = GetSelectedFiles().First();
+                    command.Parameters.AddWithValue("@File", file);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -97,7 +98,7 @@ namespace RestoreDatabase
         {
             if (ofdSelectFile.ShowDialog() == DialogResult.OK)
             {
-                tbSelectedFile.Text = ofdSelectFile.FileName;
+                SetSelectedFiles(ofdSelectFile.FileNames);
             }
         }
 
@@ -206,27 +207,27 @@ namespace RestoreDatabase
             }
         }
 
-        private static bool GenerateSQL(string databaseName, string originalDatabaseName, string file, string dblocation, string newuser, string newpassword, out string sql)
+        private static bool GenerateSQL(string databaseName, string originalDatabaseName, string[] files, string dblocation, string newuser, string newpassword, out string sql)
         {
-            if (string.IsNullOrEmpty(file))
+            if (!files.Any())
             {
                 sql = null;
                 return false;
             }
 
-            var fromDatabase = Path.GetFileName(file).Replace(Path.GetExtension(file) ?? "", "");
-            if (!string.IsNullOrEmpty(originalDatabaseName))
-            {
-                fromDatabase = originalDatabaseName;
-            }
+
+            var fromDatabase = originalDatabaseName;
 
             var mdfFile = Path.Combine(dblocation, databaseName + ".mdf");
             var logFile = Path.Combine(dblocation, databaseName + ".ldf");
 
             var sqlFormat = ReadCreateScript();
+
+            var disk = string.Join(Environment.NewLine+",", files.Select(f => string.Format("DISK = '{0}'", f)).ToArray());
+
             if (!string.IsNullOrEmpty(sqlFormat))
             {
-                sql = string.Format(sqlFormat, databaseName, file, fromDatabase, mdfFile, logFile, newuser, newpassword);
+                sql = string.Format(sqlFormat, databaseName, disk, fromDatabase, mdfFile, logFile, newuser, newpassword);
                 return true;
             }
             else
@@ -246,7 +247,8 @@ namespace RestoreDatabase
         {
             string sql;
             tbDBLocation.Text = GetDbLocation();
-            if (GenerateSQL(tbDatabaseName.Text, tbOrgDatabaseName.Text, tbSelectedFile.Text, tbDBLocation.Text, tbNewSqlUser.Text, tbNewSqlPassword.Text, out sql))
+            var files = GetSelectedFiles();
+            if (GenerateSQL(tbDatabaseName.Text, tbOrgDatabaseName.Text, files, tbDBLocation.Text, tbNewSqlUser.Text, tbNewSqlPassword.Text, out sql))
             {
                 tbSql.Text = sql;
             }
@@ -269,13 +271,21 @@ namespace RestoreDatabase
 
         private void tbSelectedFile_TextChanged(object sender, EventArgs e)
         {
-            var databasename = GetDatabaseNameFromSelectedFile();
+            string databasename = null;
+            try
+            {
+                databasename = GetDatabaseNameFromSelectedFile();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             if (databasename != null)
             {
                 tbOrgDatabaseName.Text = databasename;
             }
             UpdateSql();
-            
+
         }
 
         private void tbServer_TextChanged(object sender, EventArgs e)
@@ -323,6 +333,37 @@ namespace RestoreDatabase
             }
 
             return null;
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.All(f => string.Equals(Path.GetExtension(f), ".bak", StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+            }
+
+        }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            SetSelectedFiles(files);
+            
+        }
+
+        private void SetSelectedFiles(string[] files)
+        {
+            tbSelectedFile.Text = string.Join(Environment.NewLine, files);
+        }
+
+        private string[] GetSelectedFiles()
+        {
+            return tbSelectedFile.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

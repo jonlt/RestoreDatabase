@@ -65,9 +65,10 @@
             this.tbSelectedFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSelectedFile.Location = new System.Drawing.Point(12, 12);
+            this.tbSelectedFile.Multiline = true;
             this.tbSelectedFile.Name = "tbSelectedFile";
             this.tbSelectedFile.ReadOnly = true;
-            this.tbSelectedFile.Size = new System.Drawing.Size(616, 20);
+            this.tbSelectedFile.Size = new System.Drawing.Size(616, 72);
             this.tbSelectedFile.TabIndex = 0;
             this.tbSelectedFile.TextChanged += new System.EventHandler(this.tbSelectedFile_TextChanged);
             // 
@@ -75,18 +76,18 @@
             // 
             this.btnSelectFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectFile.Location = new System.Drawing.Point(12, 38);
+            this.btnSelectFile.Location = new System.Drawing.Point(12, 90);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(616, 35);
             this.btnSelectFile.TabIndex = 10;
-            this.btnSelectFile.Text = "Select File";
+            this.btnSelectFile.Text = "Select Files (or drop them in)";
             this.btnSelectFile.UseVisualStyleBackColor = true;
             this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 76);
+            this.label1.Location = new System.Drawing.Point(12, 128);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 3;
@@ -96,7 +97,7 @@
             // 
             this.tbServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbServer.Location = new System.Drawing.Point(12, 92);
+            this.tbServer.Location = new System.Drawing.Point(12, 144);
             this.tbServer.Name = "tbServer";
             this.tbServer.Size = new System.Drawing.Size(616, 20);
             this.tbServer.TabIndex = 20;
@@ -106,7 +107,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 171);
+            this.label2.Location = new System.Drawing.Point(12, 223);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 5;
@@ -116,7 +117,7 @@
             // 
             this.tbDatabaseName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDatabaseName.Location = new System.Drawing.Point(12, 188);
+            this.tbDatabaseName.Location = new System.Drawing.Point(12, 240);
             this.tbDatabaseName.Name = "tbDatabaseName";
             this.tbDatabaseName.Size = new System.Drawing.Size(616, 20);
             this.tbDatabaseName.TabIndex = 30;
@@ -126,7 +127,7 @@
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRestore.Location = new System.Drawing.Point(11, 590);
+            this.btnRestore.Location = new System.Drawing.Point(11, 641);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(616, 51);
             this.btnRestore.TabIndex = 80;
@@ -136,12 +137,15 @@
             // 
             // ofdSelectFile
             // 
+            this.ofdSelectFile.AddExtension = false;
+            this.ofdSelectFile.DefaultExt = "*.bak";
             this.ofdSelectFile.FileName = "openFileDialog1";
+            this.ofdSelectFile.Multiselect = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 303);
+            this.label3.Location = new System.Drawing.Point(12, 355);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(137, 13);
             this.label3.TabIndex = 8;
@@ -151,7 +155,7 @@
             // 
             this.tbDBLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDBLocation.Location = new System.Drawing.Point(12, 319);
+            this.tbDBLocation.Location = new System.Drawing.Point(12, 371);
             this.tbDBLocation.Name = "tbDBLocation";
             this.tbDBLocation.Size = new System.Drawing.Size(616, 20);
             this.tbDBLocation.TabIndex = 50;
@@ -161,7 +165,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(12, 345);
+            this.button1.Location = new System.Drawing.Point(12, 397);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(616, 31);
             this.button1.TabIndex = 60;
@@ -174,17 +178,17 @@
             this.tbSql.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSql.Location = new System.Drawing.Point(12, 398);
+            this.tbSql.Location = new System.Drawing.Point(12, 451);
             this.tbSql.Multiline = true;
             this.tbSql.Name = "tbSql";
-            this.tbSql.Size = new System.Drawing.Size(616, 186);
+            this.tbSql.Size = new System.Drawing.Size(616, 184);
             this.tbSql.TabIndex = 70;
             // 
             // tbOrgDatabaseName
             // 
             this.tbOrgDatabaseName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbOrgDatabaseName.Location = new System.Drawing.Point(12, 228);
+            this.tbOrgDatabaseName.Location = new System.Drawing.Point(12, 280);
             this.tbOrgDatabaseName.Name = "tbOrgDatabaseName";
             this.tbOrgDatabaseName.Size = new System.Drawing.Size(616, 20);
             this.tbOrgDatabaseName.TabIndex = 40;
@@ -193,7 +197,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 211);
+            this.label4.Location = new System.Drawing.Point(12, 263);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 13);
             this.label4.TabIndex = 12;
@@ -202,7 +206,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 382);
+            this.label5.Location = new System.Drawing.Point(11, 434);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 14;
@@ -212,7 +216,7 @@
             // 
             this.lbWorkIndicator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbWorkIndicator.AutoSize = true;
-            this.lbWorkIndicator.Location = new System.Drawing.Point(8, 647);
+            this.lbWorkIndicator.Location = new System.Drawing.Point(8, 698);
             this.lbWorkIndicator.Name = "lbWorkIndicator";
             this.lbWorkIndicator.Size = new System.Drawing.Size(70, 13);
             this.lbWorkIndicator.TabIndex = 15;
@@ -221,7 +225,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 119);
+            this.label6.Location = new System.Drawing.Point(12, 171);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(235, 13);
             this.label6.TabIndex = 16;
@@ -229,7 +233,7 @@
             // 
             // tbSqlUser
             // 
-            this.tbSqlUser.Location = new System.Drawing.Point(53, 139);
+            this.tbSqlUser.Location = new System.Drawing.Point(53, 191);
             this.tbSqlUser.Name = "tbSqlUser";
             this.tbSqlUser.Size = new System.Drawing.Size(242, 20);
             this.tbSqlUser.TabIndex = 21;
@@ -237,7 +241,7 @@
             // tbSqlPassword
             // 
             this.tbSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSqlPassword.Location = new System.Drawing.Point(363, 139);
+            this.tbSqlPassword.Location = new System.Drawing.Point(363, 191);
             this.tbSqlPassword.Name = "tbSqlPassword";
             this.tbSqlPassword.PasswordChar = '*';
             this.tbSqlPassword.Size = new System.Drawing.Size(200, 20);
@@ -246,7 +250,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 142);
+            this.label7.Location = new System.Drawing.Point(15, 194);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 13);
             this.label7.TabIndex = 19;
@@ -256,7 +260,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(301, 142);
+            this.label8.Location = new System.Drawing.Point(301, 194);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 20;
@@ -266,7 +270,7 @@
             // 
             this.cbShowSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbShowSqlPassword.AutoSize = true;
-            this.cbShowSqlPassword.Location = new System.Drawing.Point(569, 141);
+            this.cbShowSqlPassword.Location = new System.Drawing.Point(569, 193);
             this.cbShowSqlPassword.Name = "cbShowSqlPassword";
             this.cbShowSqlPassword.Size = new System.Drawing.Size(59, 17);
             this.cbShowSqlPassword.TabIndex = 23;
@@ -278,7 +282,7 @@
             // 
             this.cbShowNewSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbShowNewSqlPassword.AutoSize = true;
-            this.cbShowNewSqlPassword.Location = new System.Drawing.Point(569, 277);
+            this.cbShowNewSqlPassword.Location = new System.Drawing.Point(569, 329);
             this.cbShowNewSqlPassword.Name = "cbShowNewSqlPassword";
             this.cbShowNewSqlPassword.Size = new System.Drawing.Size(59, 17);
             this.cbShowNewSqlPassword.TabIndex = 86;
@@ -290,7 +294,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(301, 278);
+            this.label9.Location = new System.Drawing.Point(301, 330);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(56, 13);
             this.label9.TabIndex = 83;
@@ -299,7 +303,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 278);
+            this.label10.Location = new System.Drawing.Point(15, 330);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(32, 13);
             this.label10.TabIndex = 82;
@@ -308,7 +312,7 @@
             // tbNewSqlPassword
             // 
             this.tbNewSqlPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbNewSqlPassword.Location = new System.Drawing.Point(363, 275);
+            this.tbNewSqlPassword.Location = new System.Drawing.Point(363, 327);
             this.tbNewSqlPassword.Name = "tbNewSqlPassword";
             this.tbNewSqlPassword.PasswordChar = '*';
             this.tbNewSqlPassword.Size = new System.Drawing.Size(200, 20);
@@ -316,7 +320,7 @@
             // 
             // tbNewSqlUser
             // 
-            this.tbNewSqlUser.Location = new System.Drawing.Point(53, 275);
+            this.tbNewSqlUser.Location = new System.Drawing.Point(53, 327);
             this.tbNewSqlUser.Name = "tbNewSqlUser";
             this.tbNewSqlUser.Size = new System.Drawing.Size(242, 20);
             this.tbNewSqlUser.TabIndex = 84;
@@ -324,7 +328,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 255);
+            this.label11.Location = new System.Drawing.Point(12, 307);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(112, 13);
             this.label11.TabIndex = 81;
@@ -332,9 +336,10 @@
             // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 669);
+            this.ClientSize = new System.Drawing.Size(640, 720);
             this.Controls.Add(this.cbShowNewSqlPassword);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
@@ -365,6 +370,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "SQL .bak Restore";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.ResumeLayout(false);
             this.PerformLayout();
 
